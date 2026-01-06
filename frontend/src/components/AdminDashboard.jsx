@@ -14,7 +14,8 @@ export default function AdminDashboard() {
         <div className="pb-32 bg-gray-50 min-h-screen">
             {/* Header */}
             {/* Header */}
-            <header className="relative p-6 pb-8 text-white">
+            {/* Header */}
+            <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-purple-700 rounded-b-3xl z-0"></div>
 
                 <div className="relative z-50">
@@ -31,7 +32,7 @@ export default function AdminDashboard() {
                 </div>
             </header>
 
-            <div className="px-6 -mt-4 space-y-6 relative z-10">
+            <div className="px-6 mt-6 space-y-6 relative z-10">
 
                 {/* Toggle Tabs */}
                 <div className="bg-white p-1.5 rounded-xl shadow-sm border border-gray-100 flex">

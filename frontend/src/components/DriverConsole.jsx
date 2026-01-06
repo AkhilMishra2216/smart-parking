@@ -66,7 +66,7 @@ export default function DriverConsole() {
     return (
         <div className="pb-32 bg-[#F3F4F9] min-h-screen font-sans">
             {/* Header matching Design */}
-            <header className="relative p-6 pb-28 text-white">
+            <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-[#4C35DE] rounded-b-[3rem] shadow-none z-0"></div>
 
                 <div className="relative z-50">
@@ -87,7 +87,7 @@ export default function DriverConsole() {
                 </div>
             </header>
 
-            <div className="px-5 -mt-20 space-y-6 relative z-10">
+            <div className="px-5 mt-6 space-y-6 relative z-10">
 
                 {/* New Assignments Card (Always Visible) */}
                 {newAssignments.length > 0 && (

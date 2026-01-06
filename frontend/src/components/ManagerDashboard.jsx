@@ -143,7 +143,7 @@ export default function ManagerDashboard() {
     return (
         <div className="pb-20 relative">
             {/* Header */}
-            <header className="relative p-6 text-white">
+            <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-slate-900 rounded-b-3xl z-0"></div>
 
                 <div className="relative z-50">
@@ -163,7 +163,7 @@ export default function ManagerDashboard() {
                 </div>
             </header>
 
-            <div className="px-6 -mt-4 space-y-6 relative z-10">
+            <div className="px-6 mt-6 space-y-6 relative z-10">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
                     {stats.map((stat, i) => (
