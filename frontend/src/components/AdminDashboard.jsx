@@ -4,10 +4,10 @@ import { useState } from 'react';
 export default function AdminDashboard() {
     // Initial mock state
     const [activeTab, setActiveTab] = useState('overview');
-    const [activeParking] = useState(45);
-    const [totalTickets] = useState(1247);
-    const [todayCollection] = useState(13050);
-    const [todayTickets] = useState(87);
+    const [activeParking] = useState(12);
+    const [totalTickets] = useState(145);
+    const [todayCollection] = useState(1800);
+    const [todayTickets] = useState(12);
 
     return (
         <div className="pb-32 bg-gray-50 min-h-screen">
@@ -29,8 +29,8 @@ export default function AdminDashboard() {
                     <button
                         onClick={() => setActiveTab('overview')}
                         className={`flex-1 text-sm font-medium py-2.5 rounded-lg transition-all ${activeTab === 'overview'
-                                ? 'bg-purple-600 text-white shadow-md'
-                                : 'text-gray-500 hover:bg-gray-50'
+                            ? 'bg-purple-600 text-white shadow-md'
+                            : 'text-gray-500 hover:bg-gray-50'
                             }`}
                     >
                         Overview
@@ -38,8 +38,8 @@ export default function AdminDashboard() {
                     <button
                         onClick={() => setActiveTab('approvals')}
                         className={`flex-1 text-sm font-medium py-2.5 rounded-lg transition-all ${activeTab === 'approvals'
-                                ? 'bg-purple-600 text-white shadow-md'
-                                : 'text-gray-500 hover:bg-gray-50'
+                            ? 'bg-purple-600 text-white shadow-md'
+                            : 'text-gray-500 hover:bg-gray-50'
                             }`}
                     >
                         Approvals
