@@ -1,5 +1,6 @@
 import { Search, Plus, Phone, User, MapPin, Clock, X, Check } from 'lucide-react';
 import { useState } from 'react';
+import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function ManagerDashboard() {
     const [activeTab, setActiveTab] = useState('All');
@@ -145,12 +146,15 @@ export default function ManagerDashboard() {
             <header className="bg-slate-900 text-white p-6 rounded-b-3xl">
                 <div className="flex justify-between items-center mb-2">
                     <h1 className="text-xl font-bold">Manager Dashboard</h1>
-                    <button
-                        onClick={() => setIsAddDriverOpen(true)}
-                        className="bg-white/10 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white/20 transition-colors"
-                    >
-                        <Plus size={14} /> Add Driver
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setIsAddDriverOpen(true)}
+                            className="bg-white/10 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white/20 transition-colors"
+                        >
+                            <Plus size={14} /> Add Driver
+                        </button>
+                        <ProfileRoleSwitcher light={true} />
+                    </div>
                 </div>
                 <p className="text-slate-400 text-xs">Manage valet assignments and parking operations</p>
             </header>

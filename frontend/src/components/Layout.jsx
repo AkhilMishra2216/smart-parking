@@ -28,8 +28,7 @@ export default function Layout({ children }) {
                 )}
             </div>
 
-            {/* Persistent Role Switcher for Demo */}
-            <LoginAsPanel />
+            {/* LoginAsPanel removed in favor of Top Nav Avatar Switcher */}
         </div>
     );
 }

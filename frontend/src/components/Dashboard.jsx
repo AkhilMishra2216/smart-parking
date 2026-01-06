@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,9 +13,7 @@ export default function Dashboard() {
             <p className="text-blue-100 text-sm font-medium">Smart Parking</p>
             <h1 className="text-2xl font-bold">Welcome back!</h1>
           </div>
-          <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-            <span className="text-xl">👤</span>
-          </div>
+          <ProfileRoleSwitcher light={true} />
         </div>
       </header>
 

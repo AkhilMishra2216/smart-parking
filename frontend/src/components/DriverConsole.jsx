@@ -61,11 +61,14 @@ export default function DriverConsole() {
                         <p className="text-sm text-blue-100/80 font-light">Welcome back,</p>
                         <h1 className="text-xl font-medium tracking-wide">Rajesh Kumar</h1>
                     </div>
-                    <div className="relative mt-1">
-                        <Bell size={24} className="text-white" />
-                        {newAssignments.length > 0 && (
-                            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-blue-700"></span>
-                        )}
+                    <div className="relative mt-1 flex gap-3">
+                        <ProfileRoleSwitcher light={true} />
+                        <div className="relative">
+                            <Bell size={24} className="text-white" />
+                            {newAssignments.length > 0 && (
+                                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-blue-700"></span>
+                            )}
+                        </div>
                     </div>
                 </div>
             </header>

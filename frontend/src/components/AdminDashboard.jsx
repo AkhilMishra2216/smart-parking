@@ -1,5 +1,6 @@
 import { ChevronDown, MapPin, TrendingUp, Ticket, IndianRupee, Car, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function AdminDashboard() {
     // Initial mock state
@@ -13,11 +14,14 @@ export default function AdminDashboard() {
         <div className="pb-32 bg-gray-50 min-h-screen">
             {/* Header */}
             <header className="bg-purple-700 text-white p-6 pb-8 rounded-b-3xl">
-                <div className="flex items-center gap-4 mb-4">
-                    <button className="p-1 hover:bg-white/10 rounded-lg">
-                        <div className="transform rotate-180">➜</div>
-                    </button>
-                    <h1 className="text-lg font-bold">Super Admin</h1>
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                        <button className="p-1 hover:bg-white/10 rounded-lg">
+                            <div className="transform rotate-180">➜</div>
+                        </button>
+                        <h1 className="text-lg font-bold">Super Admin</h1>
+                    </div>
+                    <ProfileRoleSwitcher light={true} />
                 </div>
                 <p className="text-purple-200 text-xs">System overview and approvals</p>
             </header>
