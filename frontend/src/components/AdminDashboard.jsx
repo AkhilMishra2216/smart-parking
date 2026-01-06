@@ -13,20 +13,25 @@ export default function AdminDashboard() {
     return (
         <div className="pb-32 bg-gray-50 min-h-screen">
             {/* Header */}
-            <header className="bg-purple-700 text-white p-6 pb-8 rounded-b-3xl">
-                <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                        <button className="p-1 hover:bg-white/10 rounded-lg">
-                            <div className="transform rotate-180">➜</div>
-                        </button>
-                        <h1 className="text-lg font-bold">Super Admin</h1>
+            {/* Header */}
+            <header className="relative p-6 pb-8 text-white">
+                <div className="absolute inset-0 bg-purple-700 rounded-b-3xl z-0"></div>
+
+                <div className="relative z-50">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-4">
+                            <button className="p-1 hover:bg-white/10 rounded-lg">
+                                <div className="transform rotate-180">➜</div>
+                            </button>
+                            <h1 className="text-lg font-bold">Super Admin</h1>
+                        </div>
+                        <ProfileRoleSwitcher light={true} />
                     </div>
-                    <ProfileRoleSwitcher light={true} />
+                    <p className="text-purple-200 text-xs">System overview and approvals</p>
                 </div>
-                <p className="text-purple-200 text-xs">System overview and approvals</p>
             </header>
 
-            <div className="px-6 -mt-4 space-y-6">
+            <div className="px-6 -mt-4 space-y-6 relative z-10">
 
                 {/* Toggle Tabs */}
                 <div className="bg-white p-1.5 rounded-xl shadow-sm border border-gray-100 flex">

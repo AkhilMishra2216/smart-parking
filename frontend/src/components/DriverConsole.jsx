@@ -1,5 +1,6 @@
 import { Bell, MapPin, Clock, User, ChevronRight, CheckCircle, Loader2 } from 'lucide-react';
 import { useState } from 'react';
+import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function DriverConsole() {
     const [retrievalStatus, setRetrievalStatus] = useState('idle'); // idle, in-progress, completed
@@ -17,7 +18,18 @@ export default function DriverConsole() {
         }
     ]);
 
-    const [currentAssignment, setCurrentAssignment] = useState(null);
+    // Initialize with Active Assignment matching screenshot
+    const [currentAssignment, setCurrentAssignment] = useState({
+        id: 2,
+        car: 'Honda City',
+        plate: 'MH02AB1234',
+        action: 'Park Vehicle',
+        customer: 'Amit Sharma',
+        location: 'Phoenix Mall',
+        subLocation: 'Lower Parel, Mumbai',
+        level: 'Level 2 - B34',
+        assignedAt: '05:56 pm'
+    });
 
     const handleAcceptAssignment = (assignment) => {
         setNewAssignments(prev => prev.filter(a => a.id !== assignment.id));
@@ -28,11 +40,11 @@ export default function DriverConsole() {
             car: assignment.car,
             plate: assignment.plate,
             action: assignment.action,
-            customer: 'Priya Verma',
+            customer: 'Priya Verma', // Mock for dynamic accept
             location: 'Phoenix Mall',
             subLocation: 'Lower Parel, Mumbai',
-            level: 'Level 3 - A12', // changed from parkAt to level/spot
-            assignedAt: '01:04 pm'
+            level: 'Level 3 - A12',
+            assignedAt: '03:24 pm'
         });
     };
 
@@ -52,47 +64,49 @@ export default function DriverConsole() {
     };
 
     return (
-        <div className="pb-32 bg-gray-50 min-h-screen font-sans">
+        <div className="pb-32 bg-[#F3F4F9] min-h-screen font-sans">
             {/* Header matching Design */}
-            <header className="bg-blue-700 text-white p-6 pb-24 rounded-b-[2.5rem] shadow-md relative z-10">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <p className="text-blue-100/90 text-sm mb-0.5">Driver Console</p>
-                        <p className="text-sm text-blue-100/80 font-light">Welcome back,</p>
-                        <h1 className="text-xl font-medium tracking-wide">Rajesh Kumar</h1>
-                    </div>
-                    <div className="relative mt-1 flex gap-3">
-                        <ProfileRoleSwitcher light={true} />
-                        <div className="relative">
-                            <Bell size={24} className="text-white" />
-                            {newAssignments.length > 0 && (
-                                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-blue-700"></span>
-                            )}
+            <header className="relative p-6 pb-28 text-white">
+                <div className="absolute inset-0 bg-[#4C35DE] rounded-b-[3rem] shadow-none z-0"></div>
+
+                <div className="relative z-50">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <p className="text-white/90 text-sm font-normal mb-1">Driver Console</p>
+                            <p className="text-sm text-white/80 font-light">Welcome back,</p>
+                            <h1 className="text-xl font-medium tracking-wide">Rajesh Kumar</h1>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <ProfileRoleSwitcher light={true} />
+                            <div className="relative">
+                                <Bell size={24} className="text-white" />
+                                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center border border-[#4C35DE]">1</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <div className="px-5 -mt-16 space-y-6 relative z-20">
+            <div className="px-5 -mt-20 space-y-6 relative z-10">
 
-                {/* New Assignments Card (Image 1 Style) */}
+                {/* New Assignments Card (Always Visible) */}
                 {newAssignments.length > 0 && (
                     <div className="animate-slide-up">
                         <div className="flex items-center gap-2 mb-3 ml-1">
-                            <Bell size={16} className="text-blue-600" />
+                            <Bell size={16} className="text-[#4C35DE]" />
                             <h3 className="text-sm font-semibold text-gray-700">New Assignments</h3>
                         </div>
 
                         {newAssignments.map((assignment) => (
                             <div key={assignment.id} className="bg-white p-5 rounded-3xl shadow-sm border border-gray-100">
                                 <div className="flex gap-4 mb-4">
-                                    <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl shrink-0">
+                                    <div className="w-12 h-12 bg-[#E0E7FF] text-[#4C35DE] rounded-xl flex items-center justify-center text-xl shrink-0">
                                         🚙
                                     </div>
                                     <div>
                                         <h4 className="text-base font-semibold text-gray-800 leading-tight">{assignment.car}</h4>
                                         <p className="text-xs text-gray-400 font-medium mb-1.5">{assignment.plate}</p>
-                                        <span className="inline-block bg-amber-50 text-amber-600 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                                        <span className={`inline-block text-[10px] font-bold px-2.5 py-1 rounded-lg ${assignment.badgeColor}`}>
                                             {assignment.action}
                                         </span>
                                     </div>
@@ -100,7 +114,7 @@ export default function DriverConsole() {
 
                                 <button
                                     onClick={() => handleAcceptAssignment(assignment)}
-                                    className="w-full bg-[#8B80F9] hover:bg-[#7b6ff5] text-white py-3 rounded-xl text-sm font-medium shadow-sm active:scale-95 transition-all flex items-center justify-center gap-1"
+                                    className="w-full bg-[#4C35DE] hover:bg-[#3f2cb8] text-white py-3 rounded-xl text-sm font-medium shadow-sm active:scale-95 transition-all flex items-center justify-center gap-1"
                                 >
                                     Accept Assignment <ChevronRight size={16} />
                                 </button>
@@ -109,7 +123,7 @@ export default function DriverConsole() {
                     </div>
                 )}
 
-                {/* Current Assignment (Image 2 Style + Image 3 Progress Flow) */}
+                {/* Current Assignment (Stacked Below) */}
                 {currentAssignment && (
                     <div className="animate-slide-up">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3 ml-1">Current Assignment</h3>
@@ -120,13 +134,13 @@ export default function DriverConsole() {
 
                                 {/* Car Header */}
                                 <div className="flex gap-4 mb-6">
-                                    <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+                                    <div className="w-14 h-14 bg-[#E0E7FF] text-[#4C35DE] rounded-2xl flex items-center justify-center text-2xl shrink-0">
                                         🚙
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-semibold text-gray-800">{currentAssignment.car}</h3>
                                         <p className="text-sm text-gray-500 mb-2">{currentAssignment.plate}</p>
-                                        <span className="inline-block bg-amber-50 text-amber-600 text-[10px] font-bold px-3 py-1 rounded-full">
+                                        <span className="inline-block bg-[#D1FAE5] text-[#065F46] text-[10px] font-bold px-3 py-1 rounded-full">
                                             {currentAssignment.action}
                                         </span>
                                     </div>
@@ -162,13 +176,13 @@ export default function DriverConsole() {
                                         </div>
                                     </div>
 
-                                    {/* Retrieve From (Level) */}
+                                    {/* Park at (Level) */}
                                     <div className="flex gap-4 items-start">
                                         <div className="mt-0.5">
                                             <MapPin className="text-gray-400" size={20} />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Retrieve from</p>
+                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Park at</p>
                                             <p className="text-sm font-semibold text-gray-800">{currentAssignment.level}</p>
                                         </div>
                                     </div>
@@ -189,21 +203,21 @@ export default function DriverConsole() {
                                 <div className="mt-8">
                                     <button
                                         onClick={handleStartRetrieval}
-                                        className="w-full bg-[#5D5FEF] hover:bg-[#4d4fd9] text-white py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                        className="w-full bg-[#4C35DE] hover:bg-[#3f2cb8] text-white py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-2"
                                     >
-                                        Start Retrieval
+                                        Start Parking
                                     </button>
                                 </div>
                             </div>
                         ) : (
                             // Progress / Success View (Replacing the entire card content)
                             <div className="bg-white p-8 rounded-[1.5rem] shadow-sm border border-gray-100 min-h-[400px] flex flex-col items-center justify-center text-center animate-fade-in">
-                                <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-4xl mb-6 animate-pulse-slow">
+                                <div className="w-24 h-24 bg-[#E0E7FF] text-[#4C35DE] rounded-full flex items-center justify-center text-4xl mb-6 animate-pulse-slow">
                                     🚙
                                 </div>
 
                                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                                    {retrievalStatus === 'completed' ? 'Task Completed' : 'Retrieving Vehicle...'}
+                                    {retrievalStatus === 'completed' ? 'Task Completed' : 'Parking in progress...'}
                                 </h3>
 
                                 <p className="text-gray-500 font-medium mb-1">{currentAssignment.car}</p>
@@ -211,7 +225,7 @@ export default function DriverConsole() {
 
                                 {retrievalStatus === 'in-progress' ? (
                                     <div className="w-full max-w-[200px] h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                                        <div className="h-full bg-blue-600 rounded-full animate-progress-indeterminate"></div>
+                                        <div className="h-full bg-[#4C35DE] rounded-full animate-progress-indeterminate"></div>
                                     </div>
                                 ) : (
                                     <div className="flex items-center gap-2 text-green-500 bg-green-50 px-4 py-2 rounded-full animate-scale-in">
@@ -221,16 +235,6 @@ export default function DriverConsole() {
                                 )}
                             </div>
                         )}
-                    </div>
-                )}
-
-                {/* Empty State */}
-                {newAssignments.length === 0 && !currentAssignment && (
-                    <div className="flex flex-col items-center justify-center py-20 text-center animate-fade-in opacity-50">
-                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                            <Bell size={24} className="text-gray-400" />
-                        </div>
-                        <p className="text-gray-500 text-sm font-medium">No active assignments</p>
                     </div>
                 )}
             </div>

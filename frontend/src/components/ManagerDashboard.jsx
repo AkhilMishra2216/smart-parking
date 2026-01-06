@@ -143,23 +143,27 @@ export default function ManagerDashboard() {
     return (
         <div className="pb-20 relative">
             {/* Header */}
-            <header className="bg-slate-900 text-white p-6 rounded-b-3xl">
-                <div className="flex justify-between items-center mb-2">
-                    <h1 className="text-xl font-bold">Manager Dashboard</h1>
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => setIsAddDriverOpen(true)}
-                            className="bg-white/10 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white/20 transition-colors"
-                        >
-                            <Plus size={14} /> Add Driver
-                        </button>
-                        <ProfileRoleSwitcher light={true} />
+            <header className="relative p-6 text-white">
+                <div className="absolute inset-0 bg-slate-900 rounded-b-3xl z-0"></div>
+
+                <div className="relative z-50">
+                    <div className="flex justify-between items-center mb-2">
+                        <h1 className="text-xl font-bold">Manager Dashboard</h1>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => setIsAddDriverOpen(true)}
+                                className="bg-white/10 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1 hover:bg-white/20 transition-colors"
+                            >
+                                <Plus size={14} /> Add Driver
+                            </button>
+                            <ProfileRoleSwitcher light={true} />
+                        </div>
                     </div>
+                    <p className="text-slate-400 text-xs">Manage valet assignments and parking operations</p>
                 </div>
-                <p className="text-slate-400 text-xs">Manage valet assignments and parking operations</p>
             </header>
 
-            <div className="px-6 -mt-4 space-y-6">
+            <div className="px-6 -mt-4 space-y-6 relative z-10">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
                     {stats.map((stat, i) => (
