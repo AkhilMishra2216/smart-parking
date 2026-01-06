@@ -34,20 +34,16 @@ export default function TicketPage() {
             <h2 className="text-xl font-bold text-gray-800 mb-1">Digital Parking Ticket</h2>
             <p className="text-[#4C35DE] font-medium text-sm mb-6">Inorbit Mall</p>
 
-            {/* Ticket Card */}
             <div className="bg-white w-full max-w-sm rounded-3xl shadow-sm p-6 relative">
-                {/* Cutouts */}
                 <div className="absolute top-48 -left-4 w-8 h-8 bg-[#F3F4F9] rounded-full"></div>
                 <div className="absolute top-48 -right-4 w-8 h-8 bg-[#F3F4F9] rounded-full"></div>
 
-                {/* QR Code Section */}
                 <div className="flex justify-center mb-8">
                     <div className="p-4 border-2 border-dashed border-gray-200 rounded-2xl">
                         <QRCodeSVG value={ticket.id} size={160} />
                     </div>
                 </div>
 
-                {/* Details */}
                 <div className="space-y-6 pt-4">
                     <div className="flex items-start gap-4">
                         <span className="text-gray-300 text-xl font-bold">#</span>
@@ -95,7 +91,6 @@ export default function TicketPage() {
                 <p className="text-center text-[10px] text-gray-300 mt-8">Powered by Smart Parking</p>
             </div>
 
-            {/* Actions */}
             <div className="w-full max-w-sm space-y-3 mt-6">
                 <button className="w-full bg-[#4C35DE] text-white py-3.5 rounded-xl font-bold shadow-lg shadow-indigo-200 hover:bg-[#3f2cb8] transition-colors flex items-center justify-center gap-2">
                     <Car size={18} /> Get My Car

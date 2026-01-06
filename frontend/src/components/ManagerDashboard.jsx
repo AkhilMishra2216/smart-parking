@@ -132,17 +132,15 @@ export default function ManagerDashboard() {
         ? vehicles
         : vehicles.filter(v => v.status === activeTab);
 
-    // Calculate stats dynamically
     const stats = [
         { label: 'Active Cars', value: vehicles.filter(v => v.status === 'Parked').length },
         { label: 'Retrieving', value: vehicles.filter(v => v.status === 'Retrieving').length },
         { label: 'Total Today', value: vehicles.length },
-        { label: 'Revenue', value: '₹' + (vehicles.length * 165) }, // Mock calculation
+        { label: 'Revenue', value: '₹' + (vehicles.length * 165) },
     ];
 
     return (
         <div className="pb-20 relative">
-            {/* Header */}
             <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-slate-900 rounded-b-3xl z-0"></div>
 
@@ -164,7 +162,6 @@ export default function ManagerDashboard() {
             </header>
 
             <div className="px-6 mt-6 space-y-6 relative z-10">
-                {/* Stats Grid */}
                 <div className="grid grid-cols-2 gap-3">
                     {stats.map((stat, i) => (
                         <div key={i} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100">
@@ -174,7 +171,6 @@ export default function ManagerDashboard() {
                     ))}
                 </div>
 
-                {/* Search */}
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
                     <input
@@ -184,7 +180,6 @@ export default function ManagerDashboard() {
                     />
                 </div>
 
-                {/* Filter Tabs */}
                 <div className="flex bg-white p-1 rounded-xl border border-gray-100 overflow-x-auto no-scrollbar">
                     {tabs.map((tab) => (
                         <button
@@ -198,7 +193,6 @@ export default function ManagerDashboard() {
                     ))}
                 </div>
 
-                {/* Vehicle List */}
                 <div className="space-y-4">
                     {filteredVehicles.length === 0 ? (
                         <div className="text-center py-10 text-gray-400 text-sm">No vehicles found</div>
@@ -274,7 +268,6 @@ export default function ManagerDashboard() {
                 </div>
             </div>
 
-            {/* Add Driver Modal */}
             {isAddDriverOpen && (
                 <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4 backdrop-blur-sm">
                     <div className="bg-white w-full max-w-sm rounded-3xl p-6 relative animate-slide-up">
@@ -310,7 +303,6 @@ export default function ManagerDashboard() {
                 </div>
             )}
 
-            {/* Success Toast */}
             {showSuccess && (
                 <div className="fixed top-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl z-[60] flex items-center gap-2 animate-bounce-in">
                     <div className="bg-green-500 rounded-full p-0.5"><Check size={12} /></div>

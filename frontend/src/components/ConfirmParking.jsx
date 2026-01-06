@@ -4,11 +4,10 @@ import { ArrowLeft, Car, MapPin, Smartphone, CreditCard, Banknote, CheckCircle }
 export default function ConfirmParking() {
     const navigate = useNavigate();
     const location = useLocation();
-    const vehicle = location.state?.vehicle || { name: 'Toyota Camry', plate: 'MH 12 AB 1234' }; // Fallback
+    const vehicle = location.state?.vehicle || { name: 'Toyota Camry', plate: 'MH 12 AB 1234' };
 
     return (
         <div className="min-h-screen bg-[#F3F4F9] pb-32">
-            {/* Header */}
             <header className="bg-[#4C35DE] p-6 pb-24 text-white rounded-b-[2rem] shadow-lg relative">
                 <div className="flex items-center gap-4 mb-2">
                     <button onClick={() => navigate(-1)} className="p-1 hover:bg-white/10 rounded-full">
@@ -19,7 +18,6 @@ export default function ConfirmParking() {
             </header>
 
             <div className="px-6 -mt-20 space-y-4">
-                {/* Vehicle Details Card */}
                 <div className="bg-white p-5 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm font-medium">
                         <Car size={16} /> Vehicle Details
@@ -44,7 +42,6 @@ export default function ConfirmParking() {
                     </div>
                 </div>
 
-                {/* Location Card */}
                 <div className="bg-white p-5 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 mb-2 text-gray-500 text-sm font-medium">
                         <MapPin size={16} /> Parking Location
@@ -53,7 +50,6 @@ export default function ConfirmParking() {
                     <p className="text-sm text-gray-500">Malad West, Mumbai</p>
                 </div>
 
-                {/* Payment Method */}
                 <div>
                     <h3 className="font-bold text-gray-800 mb-3 ml-1">Payment Method</h3>
                     <p className="text-xs text-gray-500 mb-3 ml-1">Choose how you want to pay</p>
@@ -77,18 +73,15 @@ export default function ConfirmParking() {
                             <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center text-green-500">
                                 <CreditCard size={20} />
                             </div>
-                            {/* <span className="text-sm font-medium text-gray-600">Card</span> */}
                         </button>
                         <button className="bg-white border border-gray-100 p-4 rounded-xl flex flex-col items-center justify-center gap-2">
                             <div className="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center text-orange-500">
                                 <Banknote size={20} />
                             </div>
-                            {/* <span className="text-sm font-medium text-gray-600">Cash</span> */}
                         </button>
                     </div>
                 </div>
 
-                {/* Action Button */}
                 <button
                     onClick={() => {
                         const ticket = {
@@ -98,7 +91,7 @@ export default function ConfirmParking() {
                             amount: 150
                         };
                         sessionStorage.setItem('activeTicket', JSON.stringify(ticket));
-                        window.dispatchEvent(new Event('ticketUpdated')); // Notify Layout
+                        window.dispatchEvent(new Event('ticketUpdated'));
                         navigate('/ticket');
                     }}
                     className="w-full bg-[#4C35DE] text-white py-4 rounded-xl font-bold shadow-lg hover:bg-[#3f2cb8] transition-colors mt-4"

@@ -6,7 +6,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50 pb-20">
-      {/* Header */}
       <header className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 pb-12 rounded-b-[2.5rem] shadow-lg">
         <div className="flex justify-between items-center text-white">
           <div>
@@ -18,7 +17,6 @@ export default function Dashboard() {
       </header>
 
       <main className="px-6 mt-6 space-y-6">
-        {/* Promo Card */}
         <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-5 text-white shadow-xl flex items-center justify-between overflow-hidden relative">
           <div className="z-10">
             <div className="flex items-center gap-1 mb-1">
@@ -32,7 +30,6 @@ export default function Dashboard() {
           <div className="text-4xl z-10">🚗</div>
         </div>
 
-        {/* Scan Action */}
         <button onClick={() => navigate('/vehicle-select')} className="w-full group transform transition-all active:scale-95">
           <div className="bg-gradient-to-r from-amber-200 to-orange-100 p-1 rounded-2xl shadow-sm hover:shadow-md transition-all">
             <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 flex items-center justify-between border border-orange-100/50">
@@ -50,7 +47,6 @@ export default function Dashboard() {
           </div>
         </button>
 
-        {/* Recent Parking */}
         <div>
           <h3 className="text-gray-800 font-bold mb-3">Recent Parking</h3>
           <div className="space-y-3">

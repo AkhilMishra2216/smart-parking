@@ -3,10 +3,9 @@ import { useState } from 'react';
 import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function DriverConsole() {
-    const [retrievalStatus, setRetrievalStatus] = useState('idle'); // idle, in-progress, completed
+    const [retrievalStatus, setRetrievalStatus] = useState('idle');
     const [retrievalSuccess, setRetrievalSuccess] = useState(false);
 
-    // Initial State: No current assignment, one new assignment
     const [newAssignments, setNewAssignments] = useState([
         {
             id: 1,
@@ -18,7 +17,6 @@ export default function DriverConsole() {
         }
     ]);
 
-    // Initialize with Active Assignment matching screenshot
     const [currentAssignment, setCurrentAssignment] = useState({
         id: 2,
         car: 'Honda City',
@@ -34,13 +32,12 @@ export default function DriverConsole() {
     const handleAcceptAssignment = (assignment) => {
         setNewAssignments(prev => prev.filter(a => a.id !== assignment.id));
 
-        // Transform to detailed active job matching Image 2
         setCurrentAssignment({
             id: assignment.id,
             car: assignment.car,
             plate: assignment.plate,
             action: assignment.action,
-            customer: 'Priya Verma', // Mock for dynamic accept
+            customer: 'Priya Verma',
             location: 'Phoenix Mall',
             subLocation: 'Lower Parel, Mumbai',
             level: 'Level 3 - A12',
@@ -51,21 +48,18 @@ export default function DriverConsole() {
     const handleStartRetrieval = () => {
         setRetrievalStatus('in-progress');
 
-        // Simulate progress duration
         setTimeout(() => {
             setRetrievalStatus('completed');
 
-            // Allow resetting after success
             setTimeout(() => {
                 setRetrievalStatus('idle');
-                setCurrentAssignment(null); // Clear job
+                setCurrentAssignment(null);
             }, 3000);
         }, 3000);
     };
 
     return (
         <div className="pb-32 bg-[#F3F4F9] min-h-screen font-sans">
-            {/* Header matching Design */}
             <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-[#4C35DE] rounded-b-[3rem] shadow-none z-0"></div>
 
@@ -89,7 +83,6 @@ export default function DriverConsole() {
 
             <div className="px-5 mt-6 space-y-6 relative z-10">
 
-                {/* New Assignments Card (Always Visible) */}
                 {newAssignments.length > 0 && (
                     <div className="animate-slide-up">
                         <div className="flex items-center gap-2 mb-3 ml-1">
@@ -123,16 +116,13 @@ export default function DriverConsole() {
                     </div>
                 )}
 
-                {/* Current Assignment (Stacked Below) */}
                 {currentAssignment && (
                     <div className="animate-slide-up">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3 ml-1">Current Assignment</h3>
 
-                        {/* Conditional Rendering based on Retrieval Status */}
                         {retrievalStatus === 'idle' ? (
                             <div className="bg-white p-6 rounded-[1.5rem] shadow-sm border border-gray-100">
 
-                                {/* Car Header */}
                                 <div className="flex gap-4 mb-6">
                                     <div className="w-14 h-14 bg-[#E0E7FF] text-[#4C35DE] rounded-2xl flex items-center justify-center text-2xl shrink-0">
                                         🚙
@@ -148,12 +138,8 @@ export default function DriverConsole() {
 
                                 <hr className="border-gray-50 mb-6" />
 
-                                {/* Details List */}
                                 <div className="space-y-7 relative pl-1">
-                                    {/* Vertical Layout Line */}
-                                    {/* <div className="absolute left-[11px] top-2 bottom-6 w-0.5 bg-gray-100 -z-10"></div> */}
 
-                                    {/* Customer */}
                                     <div className="flex gap-4 items-start">
                                         <div className="mt-0.5">
                                             <User className="text-gray-400" size={20} />
@@ -164,7 +150,6 @@ export default function DriverConsole() {
                                         </div>
                                     </div>
 
-                                    {/* Location */}
                                     <div className="flex gap-4 items-start">
                                         <div className="mt-0.5">
                                             <MapPin className="text-gray-400" size={20} />
@@ -176,7 +161,6 @@ export default function DriverConsole() {
                                         </div>
                                     </div>
 
-                                    {/* Park at (Level) */}
                                     <div className="flex gap-4 items-start">
                                         <div className="mt-0.5">
                                             <MapPin className="text-gray-400" size={20} />
@@ -187,7 +171,6 @@ export default function DriverConsole() {
                                         </div>
                                     </div>
 
-                                    {/* Assigned At */}
                                     <div className="flex gap-4 items-start">
                                         <div className="mt-0.5">
                                             <Clock className="text-gray-400" size={20} />
@@ -199,7 +182,6 @@ export default function DriverConsole() {
                                     </div>
                                 </div>
 
-                                {/* Action Button */}
                                 <div className="mt-8">
                                     <button
                                         onClick={handleStartRetrieval}
@@ -210,7 +192,6 @@ export default function DriverConsole() {
                                 </div>
                             </div>
                         ) : (
-                            // Progress / Success View (Replacing the entire card content)
                             <div className="bg-white p-8 rounded-[1.5rem] shadow-sm border border-gray-100 min-h-[400px] flex flex-col items-center justify-center text-center animate-fade-in">
                                 <div className="w-24 h-24 bg-[#E0E7FF] text-[#4C35DE] rounded-full flex items-center justify-center text-4xl mb-6 animate-pulse-slow">
                                     🚙

@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
     content: [
         "./index.html",
@@ -8,12 +7,12 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    from: '#2563eb', // blue-600
-                    to: '#4f46e5',   // indigo-600
+                    from: '#2563eb',
+                    to: '#4f46e5',
                 },
                 secondary: {
-                    from: '#fcd34d', // amber-300
-                    to: '#fb923c',   // orange-400
+                    from: '#fcd34d',
+                    to: '#fb923c',
                 }
             },
             fontFamily: {

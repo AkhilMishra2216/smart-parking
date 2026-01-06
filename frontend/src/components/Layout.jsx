@@ -19,7 +19,6 @@ export default function Layout({ children }) {
         return () => window.removeEventListener('ticketUpdated', checkTicket);
     }, []);
 
-    // Define navigation items for each role
     const getNavItems = () => {
         switch (role) {
             case 'driver':
@@ -40,7 +39,7 @@ export default function Layout({ children }) {
                     { icon: Shield, label: 'Approvals', path: '/' },
                     { icon: Crown, label: 'Revenue', path: '/' }
                 ];
-            default: // user
+            default:
                 return [
                     { icon: Home, label: 'Home', path: '/' },
                     { icon: Ticket, label: 'Ticket', path: '/ticket' },
@@ -59,14 +58,11 @@ export default function Layout({ children }) {
                     {children}
                 </main>
 
-                {/* Unified Bottom Navigation for All Roles */}
-                {/* Unified Bottom Navigation for All Roles */}
                 {!isScanner && (
                     <nav className="fixed bottom-0 left-0 right-0 w-full z-40 bg-white border-t border-gray-200 safe-area-pb">
                         <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center relative">
 
                             {role === 'user' ? (
-                                // User Role: Standard 4 Items
                                 <div className="w-full flex justify-between items-center px-2">
                                     {navItems.map((item, idx) => {
                                         const isTicket = item.label === 'Ticket';
@@ -90,7 +86,6 @@ export default function Layout({ children }) {
                                     })}
                                 </div>
                             ) : (
-                                // Other Roles: Split with Center Button
                                 <>
                                     {navItems.slice(0, 1).map((item, idx) => (
                                         <Link key={idx} to={item.path} className="flex flex-col items-center gap-1 text-gray-400 hover:text-blue-600 transition-colors">

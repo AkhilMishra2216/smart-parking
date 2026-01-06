@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
-import Dashboard from './components/Dashboard'; // User Dashboard
+import Dashboard from './components/Dashboard';
 import ScanPage from './components/ScanPage';
 import ManagerDashboard from './components/ManagerDashboard';
 import DriverConsole from './components/DriverConsole';
@@ -15,7 +15,6 @@ import { RoleProvider, useRole } from './context/RoleContext';
 function AppContent() {
   const { role } = useRole();
 
-  // Dynamic Home Component based on Role
   const getHomeComponent = () => {
     switch (role) {
       case 'manager': return <ManagerDashboard />;

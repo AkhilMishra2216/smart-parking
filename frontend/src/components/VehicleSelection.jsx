@@ -11,7 +11,6 @@ export default function VehicleSelection() {
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Header */}
             <div className="pt-8 pb-4 px-6 text-center border-b border-gray-100 flex items-center justify-center relative">
                 <div className="w-10 h-1 bg-gray-200 rounded-full absolute top-3 left-1/2 -translate-x-1/2"></div>
                 <h2 className="text-lg font-bold">Select Your Vehicle</h2>

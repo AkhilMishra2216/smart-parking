@@ -7,7 +7,6 @@ export default function ProfileRoleSwitcher({ light = false }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -31,9 +30,6 @@ export default function ProfileRoleSwitcher({ light = false }) {
         { id: 'driver', label: 'Driver', icon: Car, color: 'text-indigo-600', bg: 'bg-indigo-50' },
         { id: 'admin', label: 'Super Admin', icon: Crown, color: 'text-purple-600', bg: 'bg-purple-50' },
     ];
-
-    // Filter out current role to show "Switch to..." options? 
-    // Or show all with active state. Showing all is better UX for "Profile" feel.
 
     return (
         <div className="relative z-50" ref={dropdownRef}>

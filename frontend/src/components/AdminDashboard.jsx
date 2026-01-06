@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ProfileRoleSwitcher from './ProfileRoleSwitcher';
 
 export default function AdminDashboard() {
-    // Initial mock state
     const [activeTab, setActiveTab] = useState('overview');
     const [activeParking] = useState(12);
     const [totalTickets] = useState(145);
@@ -12,9 +11,6 @@ export default function AdminDashboard() {
 
     return (
         <div className="pb-32 bg-gray-50 min-h-screen">
-            {/* Header */}
-            {/* Header */}
-            {/* Header */}
             <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-purple-700 rounded-b-3xl z-0"></div>
 
@@ -34,7 +30,6 @@ export default function AdminDashboard() {
 
             <div className="px-6 mt-6 space-y-6 relative z-10">
 
-                {/* Toggle Tabs */}
                 <div className="bg-white p-1.5 rounded-xl shadow-sm border border-gray-100 flex">
                     <button
                         onClick={() => setActiveTab('overview')}
@@ -58,7 +53,6 @@ export default function AdminDashboard() {
 
                 {activeTab === 'overview' ? (
                     <>
-                        {/* Site Selector */}
                         <div>
                             <p className="text-xs text-gray-500 mb-2 font-medium">Select Site</p>
                             <button className="w-full bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex justify-between items-center text-left">
@@ -72,7 +66,6 @@ export default function AdminDashboard() {
                             </button>
                         </div>
 
-                        {/* Today's Performance */}
                         <div>
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="bg-white p-1 rounded-md border border-gray-200">
@@ -93,7 +86,6 @@ export default function AdminDashboard() {
                             </div>
                         </div>
 
-                        {/* Overall Statistics */}
                         <div>
                             <h3 className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3">
                                 <TrendingUp size={16} /> Overall Statistics
@@ -127,7 +119,6 @@ export default function AdminDashboard() {
                             </div>
                         </div>
 
-                        {/* Site Details Card */}
                         <div className="bg-purple-50 p-4 rounded-2xl border border-purple-100">
                             <h4 className="text-sm font-bold text-purple-900 mb-1">Phoenix Mall - Lower Parel</h4>
                             <p className="text-xs text-purple-600">Lower Parel, Mumbai</p>

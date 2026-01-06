@@ -33,7 +33,6 @@ export default function HistoryPage() {
 
     return (
         <div className="flex-1 bg-[#F3F4F9] pb-32 font-sans h-full">
-            {/* Header */}
             <header className="bg-[#4C35DE] p-6 pb-24 text-white relative">
                 <div className="flex items-center gap-4 mb-2">
                     <button onClick={() => navigate(-1)} className="p-1 hover:bg-white/10 rounded-full">
@@ -47,7 +46,6 @@ export default function HistoryPage() {
             <div className="px-5 -mt-12 space-y-4 relative z-10">
                 {historyData.map((item, index) => (
                     <div key={index} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-                        {/* Top Row */}
                         <div className="flex justify-between items-start mb-4">
                             <div>
                                 <h3 className="text-gray-900 font-bold text-[15px]">{item.mall}</h3>
@@ -64,10 +62,8 @@ export default function HistoryPage() {
                             </div>
                         </div>
 
-                        {/* Divider */}
                         <div className="border-t border-gray-50 my-3"></div>
 
-                        {/* Bottom Row */}
                         <div className="flex justify-between items-center text-sm text-gray-600">
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-1.5">

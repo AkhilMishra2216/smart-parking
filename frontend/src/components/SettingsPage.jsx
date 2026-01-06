@@ -17,7 +17,6 @@ export default function SettingsPage() {
             </header>
 
             <div className="px-6 -mt-12 space-y-4 relative z-10">
-                {/* Profile Card */}
                 <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="w-16 h-16 bg-[#4C35DE] rounded-full flex items-center justify-center text-white text-2xl font-medium">
@@ -33,13 +32,12 @@ export default function SettingsPage() {
                     </button>
                 </div>
 
-                {/* Menu Options */}
                 <div className="space-y-3 pt-2">
                     {[
                         { icon: Car, label: 'Manage Vehicles', sub: '2 vehicles saved' },
                         { icon: FileText, label: 'Transaction History', sub: 'View all payments' },
                         { icon: HelpCircle, label: 'Help & Support', sub: 'Get assistance' },
-                        { icon: HelpCircle, label: 'FAQ', sub: 'Frequently Asked Questions' }, // Using HelpCircle for FAQ as well
+                        { icon: HelpCircle, label: 'FAQ', sub: 'Frequently Asked Questions' },
                     ].map((item, i) => (
                         <button key={i} className="w-full bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between group active:scale-[0.98] transition-transform">
                             <div className="flex items-center gap-4">
@@ -59,5 +57,3 @@ export default function SettingsPage() {
         </div>
     );
 }
-
-
