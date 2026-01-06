@@ -2,7 +2,7 @@ import { Bell, MapPin, Clock, User, ChevronRight, CheckCircle, Loader2 } from 'l
 import { useState } from 'react';
 
 export default function DriverConsole() {
-    const [loading, setLoading] = useState(false);
+    const [retrievalStatus, setRetrievalStatus] = useState('idle'); // idle, in-progress, completed
     const [retrievalSuccess, setRetrievalSuccess] = useState(false);
 
     // Initial State: No current assignment, one new assignment
@@ -37,18 +37,18 @@ export default function DriverConsole() {
     };
 
     const handleStartRetrieval = () => {
-        setLoading(true);
-        // Simulate network request
-        setTimeout(() => {
-            setLoading(false);
-            setRetrievalSuccess(true);
+        setRetrievalStatus('in-progress');
 
-            // Allow resetting after success (optional UX improvement)
+        // Simulate progress duration
+        setTimeout(() => {
+            setRetrievalStatus('completed');
+
+            // Allow resetting after success
             setTimeout(() => {
-                setRetrievalSuccess(false);
+                setRetrievalStatus('idle');
                 setCurrentAssignment(null); // Clear job
             }, 3000);
-        }, 2000);
+        }, 3000);
     };
 
     return (
@@ -106,97 +106,118 @@ export default function DriverConsole() {
                     </div>
                 )}
 
-                {/* Current Assignment (Image 2 Style) */}
+                {/* Current Assignment (Image 2 Style + Image 3 Progress Flow) */}
                 {currentAssignment && (
                     <div className="animate-slide-up">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3 ml-1">Current Assignment</h3>
-                        <div className="bg-white p-6 rounded-[1.5rem] shadow-sm border border-gray-100">
 
-                            {/* Car Header */}
-                            <div className="flex gap-4 mb-6">
-                                <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
-                                    🚙
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold text-gray-800">{currentAssignment.car}</h3>
-                                    <p className="text-sm text-gray-500 mb-2">{currentAssignment.plate}</p>
-                                    <span className="inline-block bg-amber-50 text-amber-600 text-[10px] font-bold px-3 py-1 rounded-full">
-                                        {currentAssignment.action}
-                                    </span>
-                                </div>
-                            </div>
+                        {/* Conditional Rendering based on Retrieval Status */}
+                        {retrievalStatus === 'idle' ? (
+                            <div className="bg-white p-6 rounded-[1.5rem] shadow-sm border border-gray-100">
 
-                            <hr className="border-gray-50 mb-6" />
-
-                            {/* Details List */}
-                            <div className="space-y-7 relative pl-1">
-                                {/* Vertical Layout Line */}
-                                {/* <div className="absolute left-[11px] top-2 bottom-6 w-0.5 bg-gray-100 -z-10"></div> */}
-
-                                {/* Customer */}
-                                <div className="flex gap-4 items-start">
-                                    <div className="mt-0.5">
-                                        <User className="text-gray-400" size={20} />
+                                {/* Car Header */}
+                                <div className="flex gap-4 mb-6">
+                                    <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+                                        🚙
                                     </div>
                                     <div>
-                                        <p className="text-[10px] text-gray-400 font-medium mb-0.5">Customer</p>
-                                        <p className="text-sm font-semibold text-gray-800">{currentAssignment.customer}</p>
+                                        <h3 className="text-lg font-semibold text-gray-800">{currentAssignment.car}</h3>
+                                        <p className="text-sm text-gray-500 mb-2">{currentAssignment.plate}</p>
+                                        <span className="inline-block bg-amber-50 text-amber-600 text-[10px] font-bold px-3 py-1 rounded-full">
+                                            {currentAssignment.action}
+                                        </span>
                                     </div>
                                 </div>
 
-                                {/* Location */}
-                                <div className="flex gap-4 items-start">
-                                    <div className="mt-0.5">
-                                        <MapPin className="text-gray-400" size={20} />
+                                <hr className="border-gray-50 mb-6" />
+
+                                {/* Details List */}
+                                <div className="space-y-7 relative pl-1">
+                                    {/* Vertical Layout Line */}
+                                    {/* <div className="absolute left-[11px] top-2 bottom-6 w-0.5 bg-gray-100 -z-10"></div> */}
+
+                                    {/* Customer */}
+                                    <div className="flex gap-4 items-start">
+                                        <div className="mt-0.5">
+                                            <User className="text-gray-400" size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Customer</p>
+                                            <p className="text-sm font-semibold text-gray-800">{currentAssignment.customer}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-[10px] text-gray-400 font-medium mb-0.5">Location</p>
-                                        <p className="text-sm font-semibold text-gray-800">{currentAssignment.location}</p>
-                                        <p className="text-xs text-gray-400">{currentAssignment.subLocation}</p>
+
+                                    {/* Location */}
+                                    <div className="flex gap-4 items-start">
+                                        <div className="mt-0.5">
+                                            <MapPin className="text-gray-400" size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Location</p>
+                                            <p className="text-sm font-semibold text-gray-800">{currentAssignment.location}</p>
+                                            <p className="text-xs text-gray-400">{currentAssignment.subLocation}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Retrieve From (Level) */}
+                                    <div className="flex gap-4 items-start">
+                                        <div className="mt-0.5">
+                                            <MapPin className="text-gray-400" size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Retrieve from</p>
+                                            <p className="text-sm font-semibold text-gray-800">{currentAssignment.level}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Assigned At */}
+                                    <div className="flex gap-4 items-start">
+                                        <div className="mt-0.5">
+                                            <Clock className="text-gray-400" size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] text-gray-400 font-medium mb-0.5">Assigned at</p>
+                                            <p className="text-lg font-semibold text-gray-800">{currentAssignment.assignedAt}</p>
+                                        </div>
                                     </div>
                                 </div>
 
-                                {/* Retrieve From (Level) */}
-                                <div className="flex gap-4 items-start">
-                                    <div className="mt-0.5">
-                                        <MapPin className="text-gray-400" size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] text-gray-400 font-medium mb-0.5">Retrieve from</p>
-                                        <p className="text-sm font-semibold text-gray-800">{currentAssignment.level}</p>
-                                    </div>
-                                </div>
-
-                                {/* Assigned At */}
-                                <div className="flex gap-4 items-start">
-                                    <div className="mt-0.5">
-                                        <Clock className="text-gray-400" size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-[10px] text-gray-400 font-medium mb-0.5">Assigned at</p>
-                                        <p className="text-lg font-semibold text-gray-800">{currentAssignment.assignedAt}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Action Button Section with specific state handling */}
-                            <div className="mt-8">
-                                {retrievalSuccess ? (
-                                    <div className="w-full bg-green-500 text-white py-3.5 rounded-xl text-sm font-bold shadow-md flex items-center justify-center gap-2 animate-in fade-in zoom-in">
-                                        <CheckCircle size={20} /> Vehicle Retrieved
-                                    </div>
-                                ) : (
+                                {/* Action Button */}
+                                <div className="mt-8">
                                     <button
                                         onClick={handleStartRetrieval}
-                                        disabled={loading}
                                         className="w-full bg-[#5D5FEF] hover:bg-[#4d4fd9] text-white py-3.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 active:scale-95 transition-all flex items-center justify-center gap-2"
                                     >
-                                        {loading ? <Loader2 className="animate-spin" size={20} /> : 'Start Retrieval'}
+                                        Start Retrieval
                                     </button>
+                                </div>
+                            </div>
+                        ) : (
+                            // Progress / Success View (Replacing the entire card content)
+                            <div className="bg-white p-8 rounded-[1.5rem] shadow-sm border border-gray-100 min-h-[400px] flex flex-col items-center justify-center text-center animate-fade-in">
+                                <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center text-4xl mb-6 animate-pulse-slow">
+                                    🚙
+                                </div>
+
+                                <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                    {retrievalStatus === 'completed' ? 'Task Completed' : 'Retrieving Vehicle...'}
+                                </h3>
+
+                                <p className="text-gray-500 font-medium mb-1">{currentAssignment.car}</p>
+                                <p className="text-xs text-gray-400 mb-8">{currentAssignment.plate}</p>
+
+                                {retrievalStatus === 'in-progress' ? (
+                                    <div className="w-full max-w-[200px] h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                        <div className="h-full bg-blue-600 rounded-full animate-progress-indeterminate"></div>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center gap-2 text-green-500 bg-green-50 px-4 py-2 rounded-full animate-scale-in">
+                                        <CheckCircle size={18} />
+                                        <span className="text-sm font-bold">Success</span>
+                                    </div>
                                 )}
                             </div>
-
-                        </div>
+                        )}
                     </div>
                 )}
 
