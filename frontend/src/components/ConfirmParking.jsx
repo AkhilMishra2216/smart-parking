@@ -1,10 +1,15 @@
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, Car, MapPin, Smartphone, CreditCard, Banknote, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Car, MapPin, Smartphone, CreditCard, Banknote, CheckCircle, Loader2 } from 'lucide-react';
+import { scanQRCode } from '../utils/api';
 
 export default function ConfirmParking() {
     const navigate = useNavigate();
     const location = useLocation();
     const vehicle = location.state?.vehicle || { name: 'Toyota Camry', plate: 'MH 12 AB 1234' };
+    const qrCode = location.state?.qrCode || 'SPOT-001';
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [error, setError] = useState(null);
 
     return (
         <div className="min-h-screen bg-[#F3F4F9] pb-32">
@@ -82,21 +87,60 @@ export default function ConfirmParking() {
                     </div>
                 </div>
 
+                {error && (
+                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
+                        {error}
+                    </div>
+                )}
+
                 <button
-                    onClick={() => {
-                        const ticket = {
-                            id: 'TK-2026-01-06-439',
-                            vehicle: vehicle,
-                            entryTime: new Date().toISOString(),
-                            amount: 150
-                        };
-                        sessionStorage.setItem('activeTicket', JSON.stringify(ticket));
-                        window.dispatchEvent(new Event('ticketUpdated'));
-                        navigate('/ticket');
+                    onClick={async () => {
+                        if (!vehicle || !vehicle.id) {
+                            setError('Vehicle information is missing');
+                            return;
+                        }
+
+                        setIsProcessing(true);
+                        setError(null);
+
+                        try {
+                            const result = await scanQRCode({
+                                qr_code: qrCode,
+                                vehicle_id: vehicle.id
+                            });
+
+                            if (result.type === 'entry') {
+                                const ticket = {
+                                    id: `TK-${Date.now()}`,
+                                    vehicle: vehicle,
+                                    entryTime: new Date().toISOString(),
+                                    session: result.session,
+                                    amount: 0
+                                };
+                                sessionStorage.setItem('activeTicket', JSON.stringify(ticket));
+                                window.dispatchEvent(new Event('ticketUpdated'));
+                                navigate('/ticket');
+                            } else if (result.type === 'exit') {
+                                // Handle exit case
+                                navigate('/ticket', { state: { session: result.session, type: 'exit' } });
+                            }
+                        } catch (err) {
+                            setError(err.response?.data?.error || 'Failed to confirm parking. Please try again.');
+                        } finally {
+                            setIsProcessing(false);
+                        }
                     }}
-                    className="w-full bg-[#4C35DE] text-white py-4 rounded-xl font-bold shadow-lg hover:bg-[#3f2cb8] transition-colors mt-4"
+                    disabled={isProcessing}
+                    className="w-full bg-[#4C35DE] text-white py-4 rounded-xl font-bold shadow-lg hover:bg-[#3f2cb8] transition-colors mt-4 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                    Park My Car
+                    {isProcessing ? (
+                        <>
+                            <Loader2 className="animate-spin" size={20} />
+                            Processing...
+                        </>
+                    ) : (
+                        'Park My Car'
+                    )}
                 </button>
             </div>
         </div>
