@@ -91,6 +91,22 @@ const handleValidationErrors = (req, res, next) => {
   next();
 };
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Smart Parking API',
+    status: 'running',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      register: 'POST /api/register',
+      scan: 'POST /api/scan',
+      dashboard: 'GET /api/dashboard/:vehicle_id'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
