@@ -1,19 +1,16 @@
 import { ChevronDown, MapPin, TrendingUp, Ticket, IndianRupee, Car, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import ProfileRoleSwitcher from './ProfileRoleSwitcher';
-
 export default function AdminDashboard() {
     const [activeTab, setActiveTab] = useState('overview');
     const [activeParking] = useState(12);
     const [totalTickets] = useState(145);
     const [todayCollection] = useState(1800);
     const [todayTickets] = useState(12);
-
     return (
         <div className="pb-32 bg-gray-50 min-h-screen">
             <header className="relative p-6 pb-12 text-white">
                 <div className="absolute inset-0 bg-purple-700 rounded-b-3xl z-0"></div>
-
                 <div className="relative z-50">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-4">
@@ -27,9 +24,7 @@ export default function AdminDashboard() {
                     <p className="text-purple-200 text-xs">System overview and approvals</p>
                 </div>
             </header>
-
             <div className="px-6 mt-6 space-y-6 relative z-10">
-
                 <div className="bg-white p-1.5 rounded-xl shadow-sm border border-gray-100 flex">
                     <button
                         onClick={() => setActiveTab('overview')}
@@ -50,7 +45,6 @@ export default function AdminDashboard() {
                         Approvals
                     </button>
                 </div>
-
                 {activeTab === 'overview' ? (
                     <>
                         <div>
@@ -65,7 +59,6 @@ export default function AdminDashboard() {
                                 <ChevronDown size={16} className="text-gray-400" />
                             </button>
                         </div>
-
                         <div>
                             <div className="flex items-center gap-2 mb-3">
                                 <div className="bg-white p-1 rounded-md border border-gray-200">
@@ -73,7 +66,6 @@ export default function AdminDashboard() {
                                 </div>
                                 <h3 className="text-sm font-bold text-gray-700">Today's Performance</h3>
                             </div>
-
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
                                     <p className="text-[10px] text-gray-400 font-medium uppercase tracking-wide mb-1">Tickets Issued</p>
@@ -85,13 +77,11 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                         </div>
-
                         <div>
                             <h3 className="flex items-center gap-2 text-sm font-bold text-gray-700 mb-3">
                                 <TrendingUp size={16} /> Overall Statistics
                             </h3>
                             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm divide-y divide-gray-50">
-
                                 <div className="p-4 flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <Ticket className="text-purple-500" size={20} />
@@ -99,7 +89,6 @@ export default function AdminDashboard() {
                                     </div>
                                     <span className="font-bold text-gray-800">{totalTickets.toLocaleString()}</span>
                                 </div>
-
                                 <div className="p-4 flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <IndianRupee className="text-green-600" size={20} />
@@ -107,7 +96,6 @@ export default function AdminDashboard() {
                                     </div>
                                     <span className="font-bold text-gray-800">₹{(todayCollection + 173400).toLocaleString()}</span>
                                 </div>
-
                                 <div className="p-4 flex items-center justify-between">
                                     <div className="flex items-center gap-3">
                                         <Car className="text-blue-500" size={20} />
@@ -115,10 +103,8 @@ export default function AdminDashboard() {
                                     </div>
                                     <span className="font-bold text-gray-800">{activeParking}</span>
                                 </div>
-
                             </div>
                         </div>
-
                         <div className="bg-purple-50 p-4 rounded-2xl border border-purple-100">
                             <h4 className="text-sm font-bold text-purple-900 mb-1">Phoenix Mall - Lower Parel</h4>
                             <p className="text-xs text-purple-600">Lower Parel, Mumbai</p>

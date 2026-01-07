@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
 import { User, Shield, Car, Crown, LogOut, ChevronDown } from 'lucide-react';
 import { useRole } from '../context/RoleContext';
-
 export default function ProfileRoleSwitcher({ light = false }) {
     const { role, setRole } = useRole();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
-
     useEffect(() => {
         function handleClickOutside(event) {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -18,19 +16,16 @@ export default function ProfileRoleSwitcher({ light = false }) {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [dropdownRef]);
-
     const handleSwitch = (newRole) => {
         setRole(newRole);
         setIsOpen(false);
     };
-
     const roles = [
         { id: 'user', label: 'User', icon: User, color: 'text-blue-600', bg: 'bg-blue-50' },
         { id: 'manager', label: 'Manager', icon: Shield, color: 'text-slate-900', bg: 'bg-slate-100' },
         { id: 'driver', label: 'Driver', icon: Car, color: 'text-indigo-600', bg: 'bg-indigo-50' },
         { id: 'admin', label: 'Super Admin', icon: Crown, color: 'text-purple-600', bg: 'bg-purple-50' },
     ];
-
     return (
         <div className="relative z-50" ref={dropdownRef}>
             <button
@@ -42,13 +37,11 @@ export default function ProfileRoleSwitcher({ light = false }) {
             >
                 <User size={20} />
             </button>
-
             {isOpen && (
                 <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 animate-in fade-in zoom-in-95 origin-top-right">
                     <div className="px-3 py-2 border-b border-gray-50 mb-2">
                         <p className="text-xs text-gray-400 font-medium uppercase tracking-wide">Switch Role</p>
                     </div>
-
                     <div className="space-y-1">
                         {roles.map((r) => (
                             <button

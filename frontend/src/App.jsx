@@ -11,10 +11,8 @@ import TicketPage from './components/TicketPage';
 import SettingsPage from './components/SettingsPage';
 import HistoryPage from './components/HistoryPage';
 import { RoleProvider, useRole } from './context/RoleContext';
-
 function AppContent() {
   const { role } = useRole();
-
   const getHomeComponent = () => {
     switch (role) {
       case 'manager': return <ManagerDashboard />;
@@ -23,7 +21,6 @@ function AppContent() {
       default: return <Dashboard />;
     }
   };
-
   return (
     <Router>
       <Layout>
@@ -40,7 +37,6 @@ function AppContent() {
     </Router>
   );
 }
-
 function App() {
   return (
     <RoleProvider>
@@ -48,5 +44,4 @@ function App() {
     </RoleProvider>
   );
 }
-
 export default App;

@@ -1,32 +1,45 @@
-import { useState } from 'react';
-import { X, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, Loader2, ScanLine, Car, ChevronRight } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scanQRCode } from '../utils/api';
-
 export default function ScanPage() {
     const navigate = useNavigate();
-    const location = useLocation();
-    const vehicle = location.state?.vehicle;
     const [isScanning, setIsScanning] = useState(false);
     const [error, setError] = useState(null);
-
-    const handleScan = async (qrCode) => {
-        if (!vehicle || !vehicle.id) {
-            setError('Please select a vehicle first');
-            return;
+    const [scannedData, setScannedData] = useState(null);
+    const [showVehicleSheet, setShowVehicleSheet] = useState(false);
+    const [vehicles, setVehicles] = useState([]);
+    const location = useLocation();
+    useEffect(() => {
+        const savedVehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
+        setVehicles(savedVehicles);
+        if (location.state?.qrCode) {
+            setScannedData(location.state.qrCode);
+            setShowVehicleSheet(true);
+            if (location.state?.vehicle) {
+            }
         }
-
+    }, [location.state]);
+    const handleScanComplete = (data) => {
+        setScannedData(data);
+        setShowVehicleSheet(true);
+    };
+    const handleManualInput = () => {
+        const qrCode = prompt('Enter QR Code (e.g., Inorbit Mall):', 'Inorbit Mall');
+        if (qrCode) {
+            handleScanComplete(qrCode);
+        }
+    };
+    const handleVehicleSelect = async (vehicle, code = scannedData) => {
+        const activeCode = code || location.state?.qrCode;
         setIsScanning(true);
         setError(null);
-
         try {
             const result = await scanQRCode({
-                qr_code: qrCode,
+                qr_code: activeCode,
                 vehicle_id: vehicle.id
             });
-
             if (result.type === 'entry') {
-                // Navigate to ticket page with entry session
                 const ticket = {
                     id: `TK-${Date.now()}`,
                     vehicle: vehicle,
@@ -37,83 +50,127 @@ export default function ScanPage() {
                 window.dispatchEvent(new Event('ticketUpdated'));
                 navigate('/ticket');
             } else if (result.type === 'exit') {
-                // Handle exit - show payment or confirmation
                 navigate('/ticket', { state: { session: result.session, type: 'exit' } });
             }
         } catch (err) {
-            setError(err.response?.data?.error || 'Failed to scan QR code. Please try again.');
+            setError(err.response?.data?.error || 'Failed to process parking. Please try again.');
+            setShowVehicleSheet(false);
+            setScannedData(null);
         } finally {
             setIsScanning(false);
         }
     };
-
-    // For demo purposes - in production, use actual QR scanner
-    const handleManualInput = () => {
-        const qrCode = prompt('Enter QR Code:');
-        if (qrCode) {
-            handleScan(qrCode);
+    useEffect(() => {
+        if (location.state?.qrCode && location.state?.vehicle) {
+            handleVehicleSelect(location.state.vehicle, location.state.qrCode);
         }
+    }, [location.state]);
+    const handleRegisterNew = () => {
+        navigate('/vehicle-select', { state: { qrCode: scannedData } });
     };
-
     return (
-        <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center relative">
+        <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center relative overflow-hidden font-outfit">
+            {}
             <button
                 onClick={() => navigate('/')}
-                className="absolute top-6 right-6 z-20 p-2 bg-white/10 rounded-full backdrop-blur-md"
+                className="absolute top-6 right-6 z-20 p-2 bg-white/10 hover:bg-white/20 rounded-full backdrop-blur-md transition-colors"
             >
                 <X size={24} />
             </button>
-
-            <div className="mt-20 mb-8 text-center">
-                <h1 className="text-xl font-medium mb-1">Scan QR Code</h1>
-                <p className="text-sm text-gray-400">Scan the code at entry point</p>
-                {vehicle && (
-                    <p className="text-xs text-green-400 mt-2">Vehicle: {vehicle.plate}</p>
-                )}
-            </div>
-
-            <div className="w-72 h-72 relative mt-4">
-                <div className="absolute top-0 left-0 w-12 h-12 border-l-4 border-t-4 border-blue-500 rounded-tl-3xl"></div>
-                <div className="absolute top-0 right-0 w-12 h-12 border-r-4 border-t-4 border-blue-500 rounded-tr-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-12 h-12 border-l-4 border-b-4 border-blue-500 rounded-bl-3xl"></div>
-                <div className="absolute bottom-0 right-0 w-12 h-12 border-r-4 border-b-4 border-blue-500 rounded-br-3xl"></div>
-
-                <div className="absolute inset-0 bg-gradient-to-b from-blue-500/20 to-transparent animate-pulse rounded-3xl"></div>
-
-                <div className="w-full h-full flex items-center justify-center bg-white/5 rounded-3xl backdrop-blur-sm">
-                    {isScanning ? (
-                        <div className="text-center">
-                            <Loader2 className="w-12 h-12 animate-spin mx-auto mb-2" />
-                            <p className="text-xs">Processing...</p>
-                        </div>
+            {}
+            <div className="flex-1 w-full flex flex-col items-center justify-center p-6 pb-40">
+                <div className="w-72 h-72 relative animate-scale-in">
+                    {}
+                    <div className="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-indigo-500 rounded-tl-3xl shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                    <div className="absolute top-0 right-0 w-16 h-16 border-r-4 border-t-4 border-indigo-500 rounded-tr-3xl shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                    <div className="absolute bottom-0 left-0 w-16 h-16 border-l-4 border-b-4 border-indigo-500 rounded-bl-3xl shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                    <div className="absolute bottom-0 right-0 w-16 h-16 border-r-4 border-b-4 border-indigo-500 rounded-br-3xl shadow-[0_0_15px_rgba(99,102,241,0.5)]"></div>
+                    {}
+                    <div className="absolute left-4 right-4 h-0.5 bg-indigo-400 shadow-[0_0_20px_#818cf8] animate-scan z-20 top-1/2"></div>
+                    {}
+                    <div className="w-full h-full flex items-center justify-center bg-slate-800/30 rounded-3xl backdrop-blur-sm">
+                        <ScanLine size={48} className="text-white/20" />
+                    </div>
+                </div>
+                <div className="mt-12 text-center space-y-2">
+                    {scannedData ? (
+                        <>
+                            <p className="text-xl font-medium text-emerald-400">QR Code Detected!</p>
+                            <p className="text-slate-400">{scannedData}</p>
+                        </>
                     ) : (
-                        <div className="text-center opacity-50">
-                            <div className="text-6xl mb-2">📷</div>
-                            <p className="text-xs">Camera View</p>
-                        </div>
+                        <>
+                            <h2 className="text-xl font-bold">Scanning...</h2>
+                            <p className="text-sm text-slate-400">Align QR code within the frame</p>
+                            <button
+                                onClick={handleManualInput}
+                                className="mt-4 text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors"
+                            >
+                                SIMULATE SCAN
+                            </button>
+                        </>
                     )}
                 </div>
+                {error && (
+                    <div className="mt-6 px-4 py-3 bg-red-500/20 border border-red-500/30 rounded-xl text-sm text-red-200">
+                        {error}
+                    </div>
+                )}
             </div>
-
-            {error && (
-                <div className="mt-4 px-4 py-2 bg-red-500/20 border border-red-500/50 rounded-lg text-sm text-red-300">
-                    {error}
+            {}
+            {showVehicleSheet && (
+                <div className="fixed inset-0 z-50 flex items-end justify-center">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowVehicleSheet(false)} />
+                    <div className="bg-white w-full max-w-md rounded-t-[2rem] p-6 pb-8 relative animate-slide-up">
+                        <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6" />
+                        <div className="mb-6">
+                            <h3 className="text-lg font-bold text-slate-900">Select Your Vehicle</h3>
+                            <p className="text-sm text-slate-500 mt-1">Choose which vehicle you're parking at {scannedData}</p>
+                        </div>
+                        <div className="space-y-3 mb-6 max-h-60 overflow-y-auto">
+                            {vehicles.map(v => (
+                                <button
+                                    key={v.id}
+                                    onClick={() => handleVehicleSelect(v)}
+                                    disabled={isScanning}
+                                    className="w-full flex items-center justify-between p-4 bg-white border border-slate-200 rounded-2xl hover:border-indigo-500 hover:bg-slate-50 transition-all group text-left"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center text-slate-500 group-hover:text-indigo-600 group-hover:bg-indigo-50 transition-colors">
+                                            <Car size={20} />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-slate-900">{v.name}</p>
+                                            <p className="text-xs text-slate-500 font-medium">{v.plate}</p>
+                                        </div>
+                                    </div>
+                                    {isScanning ? (
+                                        <Loader2 size={18} className="animate-spin text-indigo-600" />
+                                    ) : (
+                                        <ChevronRight size={18} className="text-slate-300 group-hover:text-indigo-600" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                        <button
+                            onClick={handleRegisterNew}
+                            className="w-full bg-[#4C35DE] text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 active:scale-[0.98] transition-all"
+                        >
+                            Register New Vehicle
+                        </button>
+                    </div>
                 </div>
             )}
-
-            <div className="mt-12 text-center px-10">
-                <p className="text-sm text-gray-400 mb-4">
-                    Position the QR Code within the frame. The scanner will automatically detect it.
-                </p>
-                <button
-                    onClick={handleManualInput}
-                    disabled={isScanning || !vehicle}
-                    className="px-6 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors"
-                >
-                    {!vehicle ? 'Select Vehicle First' : 'Enter QR Code Manually'}
-                </button>
-            </div>
+            <style>{`
+                @keyframes scan {
+                    0% { top: 10%; opacity: 0; }
+                    50% { opacity: 1; }
+                    100% { top: 90%; opacity: 0; }
+                }
+                .animate-scan {
+                    animation: scan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                }
+            `}</style>
         </div>
     );
 }
-

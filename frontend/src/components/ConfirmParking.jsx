@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Car, MapPin, Smartphone, CreditCard, Banknote, CheckCircle, Loader2 } from 'lucide-react';
 import { scanQRCode } from '../utils/api';
-
 export default function ConfirmParking() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,7 +9,6 @@ export default function ConfirmParking() {
     const qrCode = location.state?.qrCode || 'SPOT-001';
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState(null);
-
     return (
         <div className="min-h-screen bg-[#F3F4F9] pb-32">
             <header className="bg-[#4C35DE] p-6 pb-24 text-white rounded-b-[2rem] shadow-lg relative">
@@ -21,7 +19,6 @@ export default function ConfirmParking() {
                     <h1 className="text-lg font-bold">Confirm Parking</h1>
                 </div>
             </header>
-
             <div className="px-6 -mt-20 space-y-4">
                 <div className="bg-white p-5 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 mb-4 text-gray-500 text-sm font-medium">
@@ -46,7 +43,6 @@ export default function ConfirmParking() {
                         </div>
                     </div>
                 </div>
-
                 <div className="bg-white p-5 rounded-2xl shadow-sm">
                     <div className="flex items-center gap-2 mb-2 text-gray-500 text-sm font-medium">
                         <MapPin size={16} /> Parking Location
@@ -54,11 +50,9 @@ export default function ConfirmParking() {
                     <h3 className="text-lg font-bold text-gray-800">Inorbit Mall</h3>
                     <p className="text-sm text-gray-500">Malad West, Mumbai</p>
                 </div>
-
                 <div>
                     <h3 className="font-bold text-gray-800 mb-3 ml-1">Payment Method</h3>
                     <p className="text-xs text-gray-500 mb-3 ml-1">Choose how you want to pay</p>
-
                     <div className="grid grid-cols-2 gap-4">
                         <button className="bg-indigo-50 border-2 border-indigo-500 p-4 rounded-xl flex flex-col items-center justify-center gap-2 relative">
                             <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600">
@@ -67,7 +61,6 @@ export default function ConfirmParking() {
                             <span className="text-sm font-bold text-gray-800">UPI</span>
                             <CheckCircle className="absolute bottom-2 right-2 text-indigo-500" size={16} />
                         </button>
-
                         <button className="bg-white border border-gray-100 p-4 rounded-xl flex flex-col items-center justify-center gap-2">
                             <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-500">
                                 <Banknote size={20} />
@@ -86,29 +79,24 @@ export default function ConfirmParking() {
                         </button>
                     </div>
                 </div>
-
                 {error && (
                     <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
                         {error}
                     </div>
                 )}
-
                 <button
                     onClick={async () => {
                         if (!vehicle || !vehicle.id) {
                             setError('Vehicle information is missing');
                             return;
                         }
-
                         setIsProcessing(true);
                         setError(null);
-
                         try {
                             const result = await scanQRCode({
                                 qr_code: qrCode,
                                 vehicle_id: vehicle.id
                             });
-
                             if (result.type === 'entry') {
                                 const ticket = {
                                     id: `TK-${Date.now()}`,
@@ -121,7 +109,6 @@ export default function ConfirmParking() {
                                 window.dispatchEvent(new Event('ticketUpdated'));
                                 navigate('/ticket');
                             } else if (result.type === 'exit') {
-                                // Handle exit case
                                 navigate('/ticket', { state: { session: result.session, type: 'exit' } });
                             }
                         } catch (err) {

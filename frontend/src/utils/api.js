@@ -1,29 +1,20 @@
 import axios from 'axios';
-
-// Get API URL from environment variable or use default
 const getApiUrl = () => {
-  // In production, VITE_API_URL should be set
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
-  // In development, use proxy or localhost
   if (import.meta.env.DEV) {
-    return ''; // Use Vite proxy in development
+    return ''; 
   }
-  // Fallback for production without env var
   return 'http://localhost:5000';
 };
-
-// Create axios instance with base URL
 const api = axios.create({
   baseURL: getApiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 second timeout
+  timeout: 10000, 
 });
-
-// Request interceptor
 api.interceptors.request.use(
   (config) => {
     return config;
@@ -32,18 +23,14 @@ api.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// Response interceptor for error handling
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
-    // Handle network errors
     if (!error.response) {
       error.message = 'Network error. Please check your connection.';
     } else {
-      // Handle API errors
       const { status, data } = error.response;
       if (status >= 500) {
         error.message = 'Server error. Please try again later.';
@@ -60,8 +47,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// API functions
 export const registerVehicle = async (vehicleData) => {
   try {
     const response = await api.post('/api/register', vehicleData);
@@ -70,7 +55,6 @@ export const registerVehicle = async (vehicleData) => {
     throw error;
   }
 };
-
 export const scanQRCode = async (scanData) => {
   try {
     const response = await api.post('/api/scan', scanData);
@@ -79,7 +63,6 @@ export const scanQRCode = async (scanData) => {
     throw error;
   }
 };
-
 export const getDashboardData = async (vehicleId) => {
   try {
     const response = await api.get(`/api/dashboard/${vehicleId}`);
@@ -88,6 +71,4 @@ export const getDashboardData = async (vehicleId) => {
     throw error;
   }
 };
-
 export default api;
-

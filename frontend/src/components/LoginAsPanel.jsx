@@ -1,16 +1,13 @@
 import { useRole } from '../context/RoleContext';
 import { User, Shield, Car, Crown } from 'lucide-react';
-
 export default function LoginAsPanel() {
     const { role, setRole } = useRole();
-
     const roles = [
         { id: 'user', label: 'User', icon: User },
         { id: 'manager', label: 'Manager', icon: Shield },
         { id: 'driver', label: 'Driver', icon: Car },
         { id: 'admin', label: 'Super Admin', icon: Crown },
     ];
-
     return (
         <div className="fixed bottom-6 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-xl bg-white/90 backdrop-blur-lg border border-gray-200 p-4 shadow-2xl rounded-3xl z-50">
             <div>

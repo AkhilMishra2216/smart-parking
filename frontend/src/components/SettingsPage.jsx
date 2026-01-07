@@ -1,9 +1,7 @@
 import { User, Car, FileText, HelpCircle, ChevronRight, Edit2, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
 export default function SettingsPage() {
     const navigate = useNavigate();
-
     return (
         <div className="flex-1 bg-[#F3F4F9] pb-32 h-full">
             <header className="bg-[#4C35DE] p-6 pb-24 text-white relative">
@@ -15,7 +13,6 @@ export default function SettingsPage() {
                 </div>
                 <p className="text-indigo-200 text-sm pl-11">Manage your account and preferences</p>
             </header>
-
             <div className="px-6 -mt-12 space-y-4 relative z-10">
                 <div className="bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between">
                     <div className="flex items-center gap-4">
@@ -31,7 +28,6 @@ export default function SettingsPage() {
                         <Edit2 size={18} />
                     </button>
                 </div>
-
                 <div className="space-y-3 pt-2">
                     {[
                         { icon: Car, label: 'Manage Vehicles', sub: '2 vehicles saved' },
