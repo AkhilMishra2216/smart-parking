@@ -19,9 +19,7 @@ if (missingEnvVars.length > 0) {
 app.use(helmet());
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev'));
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || (NODE_ENV === 'production'
-    ? false
-    : ['http://localhost:5173', 'http://localhost:3000']),
+  origin: process.env.FRONTEND_URL || 'https://smart-parking-bay.vercel.app',
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -29,7 +27,7 @@ app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, 
+  windowMs: 15 * 60 * 1000,
   max: NODE_ENV === 'production' ? 100 : 1000,
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,

@@ -35,7 +35,11 @@ export default function SettingsPage() {
                         { icon: HelpCircle, label: 'Help & Support', sub: 'Get assistance' },
                         { icon: HelpCircle, label: 'FAQ', sub: 'Frequently Asked Questions' },
                     ].map((item, i) => (
-                        <button key={i} className="w-full bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between group active:scale-[0.98] transition-transform">
+                        <button key={i} onClick={() => {
+                            if (item.label === 'Manage Vehicles') {
+                                navigate('/manage-vehicles');
+                            }
+                        }} className="w-full bg-white p-4 rounded-2xl shadow-sm flex items-center justify-between group active:scale-[0.98] transition-transform">
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-gray-600 group-hover:bg-[#4C35DE] group-hover:text-white transition-colors">
                                     <item.icon size={22} />

@@ -4,16 +4,16 @@ const getApiUrl = () => {
     return import.meta.env.VITE_API_URL;
   }
   if (import.meta.env.DEV) {
-    return ''; 
+    return '';
   }
-  return 'http://localhost:5000';
+  return 'https://smart-parking-2s4g.onrender.com';
 };
 const api = axios.create({
   baseURL: getApiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, 
+  timeout: 10000,
 });
 api.interceptors.request.use(
   (config) => {

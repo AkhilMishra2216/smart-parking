@@ -10,9 +10,12 @@ import ConfirmParking from './components/ConfirmParking';
 import TicketPage from './components/TicketPage';
 import SettingsPage from './components/SettingsPage';
 import HistoryPage from './components/HistoryPage';
+import ManageVehicles from './components/ManageVehicles';
 import { RoleProvider, useRole } from './context/RoleContext';
+
 function AppContent() {
   const { role } = useRole();
+
   const getHomeComponent = () => {
     switch (role) {
       case 'manager': return <ManagerDashboard />;
@@ -21,6 +24,7 @@ function AppContent() {
       default: return <Dashboard />;
     }
   };
+
   return (
     <Router>
       <Layout>
@@ -28,6 +32,7 @@ function AppContent() {
           <Route path="/" element={getHomeComponent()} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/vehicle-select" element={<VehicleSelection />} />
+          <Route path="/manage-vehicles" element={<ManageVehicles />} />
           <Route path="/confirm-parking" element={<ConfirmParking />} />
           <Route path="/ticket" element={<TicketPage />} />
           <Route path="/settings" element={<SettingsPage />} />
@@ -37,6 +42,7 @@ function AppContent() {
     </Router>
   );
 }
+
 function App() {
   return (
     <RoleProvider>
@@ -44,4 +50,5 @@ function App() {
     </RoleProvider>
   );
 }
+
 export default App;
