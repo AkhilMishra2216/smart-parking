@@ -18,8 +18,25 @@ if (missingEnvVars.length > 0) {
 }
 app.use(helmet());
 app.use(morgan(NODE_ENV === 'production' ? 'combined' : 'dev'));
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://smart-parking-bay.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+].filter(Boolean).map(url => url.replace(/\/$/, '')); // Normalize by removing trailing slash
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'https://smart-parking-bay.vercel.app',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    if (allowedOrigins.includes(normalizedOrigin) || normalizedOrigin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };

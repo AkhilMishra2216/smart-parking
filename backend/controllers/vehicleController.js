@@ -8,7 +8,7 @@ exports.registerVehicle = async (req, res, next) => {
             .select('*')
             .eq('license_plate', license_plate)
             .single();
-        if (fetchError && fetchError.code !== 'PGRST116') { 
+        if (fetchError && fetchError.code !== 'PGRST116') {
             console.error('Supabase fetch error:', fetchError);
             throw fetchError;
         }
@@ -40,6 +40,13 @@ exports.registerVehicle = async (req, res, next) => {
         });
     } catch (err) {
         console.error('Registration error:', err);
-        next(err);
+        // Better error handling for frontend
+        if (err.code === '23505') { // Unique violation
+            return res.status(409).json({ error: 'This vehicle is already registered.' });
+        }
+        res.status(500).json({
+            error: err.message || 'Failed to register vehicle',
+            details: process.env.NODE_ENV === 'development' ? err : undefined
+        });
     }
 };
