@@ -27,40 +27,15 @@ export default function ScanPage() {
             handleScanComplete(qrCode);
         }
     };
-    const handleVehicleSelect = async (vehicle, code = scannedData) => {
+    const handleVehicleSelect = (vehicle, code = scannedData) => {
         const activeCode = code || location.state?.qrCode;
-        setIsScanning(true);
-        setError(null);
-        try {
-            const result = await scanQRCode({
-                qr_code: activeCode,
-                vehicle_id: vehicle.id
-            });
-            if (result.type === 'entry') {
-                const ticket = {
-                    id: `TK-${Date.now()}`,
-                    vehicle: vehicle,
-                    entryTime: new Date().toISOString(),
-                    session: result.session
-                };
-                sessionStorage.setItem('activeTicket', JSON.stringify(ticket));
-                window.dispatchEvent(new Event('ticketUpdated'));
-                navigate('/ticket');
-            } else if (result.type === 'exit') {
-                navigate('/ticket', { state: { session: result.session, type: 'exit' } });
+        navigate('/confirm-parking', {
+            state: {
+                vehicle: vehicle,
+                qrCode: activeCode
             }
-        } catch (err) {
-            setError(err.response?.data?.error || 'Failed to process parking. Please try again.');
-            setScannedData(null);
-        } finally {
-            setIsScanning(false);
-        }
+        });
     };
-    useEffect(() => {
-        if (location.state?.qrCode && location.state?.vehicle) {
-            handleVehicleSelect(location.state.vehicle, location.state.qrCode);
-        }
-    }, [location.state]);
     const handleRegisterNew = () => {
         navigate('/vehicle-select', { state: { qrCode: scannedData } });
     };

@@ -34,8 +34,19 @@ export default function VehicleSelection() {
             const updatedVehicles = [...vehicles, newVehicle];
             setVehicles(updatedVehicles);
             localStorage.setItem('vehicles', JSON.stringify(updatedVehicles));
-            setShowRegisterForm(false);
-            setFormData({ owner_name: '', license_plate: '', contact: '' });
+
+            // Auto-select and navigate to confirm parking if QR code exists
+            if (location.state?.qrCode) {
+                navigate('/confirm-parking', {
+                    state: {
+                        vehicle: newVehicle,
+                        qrCode: location.state.qrCode
+                    }
+                });
+            } else {
+                setShowRegisterForm(false);
+                setFormData({ owner_name: '', license_plate: '', contact: '' });
+            }
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to register vehicle. Please try again.');
         } finally {
@@ -58,7 +69,7 @@ export default function VehicleSelection() {
                     {vehicles.map((v) => (
                         <button
                             key={v.id}
-                            onClick={() => navigate('/scan', { state: { vehicle: v, qrCode: location.state?.qrCode } })}
+                            onClick={() => navigate('/confirm-parking', { state: { vehicle: v, qrCode: location.state?.qrCode } })}
                             className="w-full flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 active:scale-[0.99] transition-all"
                         >
                             <div className="flex items-center gap-4">
